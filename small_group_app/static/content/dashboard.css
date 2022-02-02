@@ -1,0 +1,18 @@
+body
+{
+}
+
+.result-item {
+    border-bottom: solid;
+    border-bottom-width: 1px;
+    padding: 2%;
+}
+
+.result-item-code {
+    padding: 0 6px 0 0;
+    font-weight: bold;
+}
+
+.result-item-descrip {
+    padding: 0 0 0 6px;
+}

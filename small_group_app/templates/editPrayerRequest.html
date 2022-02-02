@@ -1,0 +1,141 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="row">
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="flex-container justify-content-between w-100 my-3">
+                    <div class="header-title">
+                        <div class="">
+                            <input type="text" class="form-control header-input mx-2" style="border: 0;" name="title" id="title" value="{{ p_request.title }}" \>
+                        </div>
+                    </div>
+                    <div class="header-buttons my-2">
+                        <div class="flex-container">
+                            <button id="btn-save" class="btn btn-light mx-1" data-toggle="tooltip" data-placement="top" title="Save"><i class="far fa-save mx-1"></i></button>
+                            <a href="{{ url_for('verifyDeletePrayerRequest', id=p_request.prayer_request_id) }}"><button class="btn btn-light mx-1" data-toggle="tooltip" data-placement="top" title="Delete"><i class="far fa-trash-alt "></i></button></a>
+                            <a href="{{ url_for('prayer_request_all_view') }}"><button class="btn btn-light mx-1" data-toggle="tooltip" data-placement="top" title="Cancel"><i class="far fa-window-close "></i></button></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="form-item-container">
+                        <h5 for="description">Description</h5>
+                        <textarea class="form-control" id="description" name="description" rows="6">{{ p_request.description }}</textarea>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-item-container">
+                        <h5 for="added-by">Added By:</h5>
+                        <select id="added-by" class="form-select">
+                            {% if users %}
+                            {% for user in users %}
+                                {% if p_request._added_by_user == user %}
+                                <option value="{{user.id}}" selected>{{ user.user_name }}</option>
+                                {% else %}
+                                <option value="{{user.id}}">{{ user.user_name }}</option>
+                                {% endif %}
+                            {% endfor %}
+                            {% endif %}
+                        </select>
+                        <!--<input id="added-by" name="{{p_request._added_by_user.id}}" class="form-control" type="text" value="{{ p_request._added_by_user.user_name}}" />-->
+                    </div>
+                    <div class="form-item-container">
+                        <h5 for="date-added">Date created:</h5>
+                        <input id="date-added" name="date-added" class="form-control" type="date" value="{{ p_request.date_added }}" />
+                    </div>
+                    <div class="form-item-container">
+                        <h5 for="category">Category:</h5>
+                        <select id="category" class="form-control dropdown" aria-h5="category" name="category">
+                            {% if categories %}
+                                {% for category in categories %}
+                                    {% if p_request._category.category_id == category.category_id %}
+                                        <option value="{{ category.category_id }}" selected>{{ category.title }}</option>
+                                    {% else %}
+                                        <option value="{{ category.category_id }}">{{ category.title }}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}
+                        </select>
+                    </div>
+                    <div class="form-item-container">
+                        <h5 for="status">Status:</h5>
+                        <select id="status" class="form-control dropdown" aria-h5="status" name="status">
+                            {% if p_request.is_answered == 0 %}
+                            <option value="0" selected>Not Answerd</option>
+                            <option value="1">Answered</option>
+                            {% else %}
+                            <option value="0">Not Answerd</option>
+                            <option value="1" selected>Answered</option>
+                            {% endif %}
+                        </select>
+                    </div>
+                    <div class="form-item-container">
+                        <h5 for="date-answered">Date answered:</h5>
+                        <input id="date-answered" name="date-added" class="form-control" type="date" value="{{ p_request.date_answered }}" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+
+<script>
+
+    //KAW going to post form.
+    $('#btn-save').click(function () {
+        //KAW collecting variables
+        var id = "{{ p_request.prayer_request_id }}"
+        var title = $("#title").val();
+        var description = $("#description").val();
+        var addedby = $("#added-by").val();
+        console.log(addedby);
+        var dateadded = $("#date-added").val();
+        var status = $("#status").val();
+        var category_id = $("#category").val();
+
+        var dateAnswered = $("#date-answered").val();
+
+        if (status == 1 && dateAnswered == '') {
+            var today = new Date();
+            var formattedDate = today.getFullYear() + "-" + today.getMonth() + "-" + today.getDay()
+            dateAnswered = formattedDate;
+        }
+
+        data = {
+            id: id,
+            title: title,
+            description: description,
+            addedby: addedby,
+            dateadded: dateadded,
+            status: status,
+            dateAnswered: dateAnswered,
+            category_id: category_id,
+        };
+
+        var url = "{{ url_for('updatePrayerRequest') }}"
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: data,
+            success: function(data, textStatus, jqXHR)
+            {
+                window.location.href = "{{ url_for('prayer_request_all_view') }}";
+            },
+            error: function (jqXHR, textStatus, errorThrown)
+            {
+                consol.log('Aw shit it broke!');
+            },
+         });
+    });
+</script>
+
+{% endblock %}

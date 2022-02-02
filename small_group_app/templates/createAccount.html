@@ -1,0 +1,149 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="row">
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="flex-container justify-content-between w-100 my-3">
+                    <div class="header-title">
+                        <div class="flex-container">
+                            <h2>Create Account</h2>
+                        </div>
+                        <div class="error-message">
+                            <span id="error-message"></span>
+                        </div>
+                    </div>
+                    <div class="header-buttons my-2">
+                        <button id="btn-add" class="btn btn-light" data-toggle="tooltip" data-placement="top" title="Save"><i class="far fa-save"></i></button>
+                        <a href="{{ url_for('home') }}"><button class="btn btn-light" data-toggle="tooltip" data-placement="top" title="Cancel"><i class="far fa-window-close"></i></button></a>
+                    </div>
+                </div>
+            </div>
+            <div class="row pb-3">
+                <div class="col-sm-4">
+                    <h4 class="section-header">Options</h4>
+                    <div class="input-row">
+                        <input type="checkbox" id="receive-emails" name="receive-emails" value="1">
+                        <label for="receive-emails">Receive Emails</label><br>
+                    </div>
+                </div>
+                <div class="col-sm-4"></div>
+                <div class="col-sm-4"></div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4">
+                    <h4 class="section-header">Account Info</h4>
+                    <div class="input-row">
+                        <input id="email" class="form-control" name="email" type="email" placeholder="Enter Email Address." />
+                    </div>
+                    <div class="input-row">
+                        <input id="user-name" class="form-control" name="user-name" type="text" placeholder="Enter User Name." />
+                    </div>
+                    <div class="input-row">
+                        <input id="password1" class="form-control" name="password1" type="password" placeholder="Enter Password." />
+                    </div>
+                    <div class="input-row">
+                        <input id="password2" class="form-control" name="password2" type="password" placeholder="Re-Enter Password." />
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <h4 class="section-header">Person Info</h4>
+                    <div class="input-row">
+                        <input id="first-name" class="form-control" name="first-name" type="text" placeholder="Enter First Name." />
+                    </div>
+                    <div class="input-row">
+                        <input id="last-name" class="form-control" name="last-name" type="text" placeholder="Enter Last Name." />
+                    </div>
+                    <div class="input-row">
+                        <input id="age" class="form-control" name="age" type="number" placeholder="Enter Age." />
+                    </div>
+                    <div class="input-row">
+                        <input id="phone_number" class="form-control" name="phone_number" type="text" placeholder="Enter Phone Number." />
+                    </div>
+                    <div class="input-row">
+                        <select id="gender" class="form-control" aria-label="gender" name="gender">
+                            <option value="male" selected>male</option>
+                            <option value="female">female</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <h4 class="section-header">Location Info</h4>
+                    <div class="input-row">
+                        <input id="address" class="form-control" name="address" type="text" placeholder="Enter Address." />
+                    </div>
+                    <div class="input-row">
+                        <input id="city" class="form-control" name="city" type="text" placeholder="Enter City." />
+                    </div>
+                    <div class="input-row">
+                        <input id="state" class="form-control" name="state" type="text" placeholder="Enter State." />
+                    </div>
+                    <div class="input-row">
+                        <input id="zip" class="form-control" name="zip" type="text" placeholder="Enter Zip Code." />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    $(function() {
+        var receiveEmails = $('#receiveEmails');
+
+        receiveEmails.prop('checked', true);
+    });
+</script>
+
+<script>
+    //KAW going to post form.
+    $('#btn-add').click(function () {
+
+        //KAW collecting variables
+        var email = $("#email").val();
+        var user_name = $("#user-name").val();
+        var first_name = $("#first-name").val();
+        var last_name = $("#last-name").val();
+        var password1 = $("#password1").val();
+        var password2 = $("#password2").val();
+        var age = $("#age").val();
+        var gender = $("#gender").val();
+        var receive_email = $("#receive-emails").is(":checked");
+        var phone_number = $("#phone_number").val();
+
+        data = {
+            email: email,
+            user_name: user_name,
+            first_name: first_name,
+            last_name: last_name,
+            password1: password1,
+            password2: password2,
+            age:age,
+            gender:gender,
+            receive_email:receive_email,
+            phone_number:phone_number
+        };
+
+        var url = "{{ url_for('create_account') }}"
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: data,
+            success: function(data, textStatus, jqXHR)
+            {
+                window.location.href = "{{ url_for('home') }}";
+            },
+            error: function (jqXHR, textStatus, errorThrown, responseText)
+            {
+                console.log(jqXHR.responseText);
+                var message = JSON.parse(jqXHR.responseText).error;
+                $('#error-message').html("Error: " + message);
+            },
+         });
+    });
+</script>
+
+{% endblock %}

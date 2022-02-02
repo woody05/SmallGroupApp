@@ -1,0 +1,99 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="row">
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="flex-container justify-content-between w-100 my-3">
+                    <div class="header-title">
+                        <div class="flex-container">
+                            <input type="text" class="form-control header-input mx-2" style="border: 0;" name="title" id="title" placeholder="Title" \>
+                        </div>
+                    </div>
+                    <div class="header-buttons my-2">
+                        <button id="btn-save" class="btn btn-light" data-toggle="tooltip" data-placement="top" title="Save"><i class="far fa-save"></i></button>
+                        <a href="{{ url_for('prayer_request_all_view') }}"><button class="btn btn-light" data-toggle="tooltip" data-placement="top" title="Cancel"><i class="far fa-window-close"></i></button></a>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="form-item-container">
+                        <h5 for="description">Description</h5>
+                        <textarea class="form-control" id="description" name="description" rows="6" placeholder="Enter Description"></textarea>
+                    </div>
+                </div>
+                <div class="col">
+                    <!--<div class="form-item-container">
+                        <h5 for="added-by">Added By:</h5>
+                        <input id="added-by" name="added-by" class="form-control" type="text" placeholder="Enter Name"/>
+                    </div>-->
+                    <!--<div class="form-item-container">
+                        <h5 for="date-added">Date created:</h5>
+                        <input id="date-added" name="date-added" class="form-control" type="date" />
+                    </div>-->
+                    <div class="form-item-container">
+                        <h5 for="category">Category:</h5>
+                        <select id="category" class="form-control dropdown" aria-h5="category" name="category">
+                            {% if categories %}
+                                {% for category in categories %}
+                                    <option value="{{ category.category_id }}">{{ category.title }}</option>
+                                {% endfor %}
+                            {% endif %}
+                        </select>
+                    </div>
+                    <!--<div class="form-item-container">
+                        <h5 for="status">Status:</h5>
+                        <select id="status" class="form-control dropdown" aria-h5="status" name="status">
+                            <option value="0">Not Answerd</option>
+                            <option value="1">Answered</option>
+                        </select>
+                    </div>-->
+                    <!--<div class="form-item-container">
+                        <h5 for="date-answered">Date answered:</h5>
+                        <input id="date-answered" name="date-added" class="form-control" type="date" value="" />
+                    </div>-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    //KAW going to post form.
+    $('#btn-save').click(function () {
+
+        //KAW collecting variables
+        var title = $("#title").val();
+        var description = $("#description").val();
+       // var added_by = $("#added-by").val();
+        var category_id = $("#category").val();
+
+        data = {
+            title: title,
+            description: description,
+            //added_by: added_by,
+            category_id : category_id
+        };
+
+        var url = "{{ url_for('addPrayerRequest') }}"
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: data,
+            success: function(data, textStatus, jqXHR)
+            {
+                window.location.href = "{{ url_for('prayer_request_all_view') }}";
+            },
+            error: function (jqXHR, textStatus, errorThrown)
+            {
+                console.log('aw shit it broke!');
+            },
+         });
+    });
+</script>
+
+{% endblock %}
+

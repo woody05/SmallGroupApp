@@ -1,0 +1,86 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="row">
+
+    <div class="col-sm-6">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="flex-container justify-content-between w-100">
+                        <div class="header-title">
+                            <div class="flex-container">
+                                <h2 class="py-2">Events</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="events-container">
+                    <h5>Coming soon...</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-6">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="flex-container justify-content-between w-100">
+                        <div class="header-title">
+                            <div class="flex-container">
+                                <h2 class="py-2">Prayer Request</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="unanswered_prayer-container">
+                    <table id="unanswered_prayer-request" class="table table_bordered display nowrap" style="width:100%">
+                        <thead class="">
+                            <tr>
+                                <th>Title</th>
+                                <th>Added</th>
+                            </tr>
+                        </thead>
+                    </table>
+                     <a href="{{ url_for('prayer_request_all_view') }}">View all</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+
+<script>
+        let dt_request_config = {
+                dom: 't',
+                responsive:true,
+                processing: true,
+                ajax: "{{ url_for('unanswered_prayers') }}",
+                columns: [
+                    {
+                        data: 'title'
+                    },
+                    {
+                        data: 'date_added'
+                    }
+                ],
+                columnDefs: [
+                ],
+                "order": [
+                    [0, 'asc'],
+                ]
+            }
+    
+    $(function() {
+        var prayer_request_table = $('#unanswered_prayer-request').DataTable(dt_request_config);
+    } );
+
+</script>
+
+{% endblock %}

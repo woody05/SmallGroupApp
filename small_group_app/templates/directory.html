@@ -1,0 +1,72 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="row">
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="flex-container justify-content-between w-100">
+                    <div class="header-title">
+                        <div class="flex-container">
+                            <h2 class="py-2">{{ title }}</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="director-container">
+                <table id="directory" class="table table_bordered display nowrap" style="width:100%">
+                    <thead class="">
+                        <tr>
+                            <th>Name</th>
+                            <th>Phone Number</th>
+                            <th>Email</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+
+<script>
+    
+    let dt_request_config = {
+                responsive:true,
+                processing: true,
+                ajax: "{{ url_for('directory_info') }}",
+                columns: [
+                    {
+                        data: 'first_name'
+                    },
+                    {
+                        data: 'phone_number'
+                    },
+                    {
+                        data: 'email_address'
+                    },
+                ],
+                columnDefs: [
+                    {
+                        "targets": [0],
+                        "render": function(data, type, row, meta) {
+                            return data + " " + row.last_name;                         
+                        }
+                    }
+                ],
+                "order": [
+                    [1, 'asc'],
+                ]
+            }
+    
+    $(function() {
+        var prayer_request_table = $('#directory').DataTable(dt_request_config);
+    } );
+
+</script>
+
+{% endblock %}

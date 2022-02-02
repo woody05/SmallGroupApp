@@ -1,0 +1,48 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+
+<div class="row">
+    <div class="header-row">
+        <h1>{{ header }}</h1>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-12">
+        <div>
+            <table id="prayerRequestTable">
+                <thead>
+                    <tr>
+                        <th>Added By</th>
+                        <th>Category</th>
+                        <th>Date Added</th>
+                        <th>Date Answered</th>
+                        <th>Description</th>
+                        <th>Is Answered</th>
+                        <th>Title</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        var apiURL = "{{ url_for('apiUnansweredPrayerRequest') }}"
+        $('#prayerRequestTable').DataTable({
+            ajax: {
+                url: apiURL,
+                dataSrc: '',
+                columnDefs: [{
+                    "targets": '_all',
+                    "defaultContent": ""
+                },]
+            },
+        });
+    } );
+</script>
+
+{% endblock %}

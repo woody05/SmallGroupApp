@@ -1,0 +1,30 @@
+<nav id="sidebar">
+
+    <div class="img bg-wrap text-center py-4" style="background-image: url({{ url_for('static', filename='img/img-bg.jpg') }}); background-size: cover;">
+        <div class="user-logo">
+            {% set profile_pic  = current_user.profile_picture if current_user.profile_picture else 'img/unknown-person-icon.png' %}
+            <div class="img" style="background-image: url({{ url_for('static', filename=profile_pic) }}); background-size: contain;"></div>
+            <h3>{{current_user.user_name if current_user.user_name else "Unkown"}}</h3>
+        </div>
+    </div>
+    <ul class="list-unstyled components mb-5">
+        <li class="active">
+            <a href="{{url_for('home')}}"><span class="fa fa-home me-3"></span> Home</a>
+        </li>
+        <li>
+            <a href="#"><span class="fa fa-calendar-alt me-3"></span> Events</a>
+        </li>
+        <li>
+            <a href="{{url_for('prayer_request_all_view')}}"><span class="fa fa-praying-hands me-3"></span> Prayer Request</a>
+        </li>
+        <li>
+            <a href="{{url_for('directory_view_all')}}"><span class="fa fa-address-book me-3"></span> Directory</a>
+        </li>
+        <li>
+            <a href="{{ url_for('user_settings') }}"><span class="fa fa-cog me-3"></span> Settings</a>
+        </li>
+        <li>
+            <a href="{{ url_for('logout') }}"><span class="fas fa-sign-out-alt me-3"></span> Logout</a>
+        </li>
+    </ul>
+</nav>

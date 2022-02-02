@@ -1,0 +1,209 @@
+{% extends "dashboardlayout.html" %}
+
+{% block content %}
+
+<style>
+    .highlight-red {
+        background-color: #d9534f;
+        color: #fff;
+    }
+
+    .highlight-yellow {
+        background-color: #ffc107;
+        color: #fff;
+    }
+
+    .highlight-green {
+        background-color: #28a745;
+        color: #fff;
+    }
+
+    .highlight-blue {
+        background-color: #007bff;
+        color: #fff;
+    }
+</style>
+
+<!--<div class="row">
+    <div class="header-row">
+        <div class="col-sm-7">
+            <div class="header-title">
+                <h1>{{ title }}</h1>
+            </div>
+        </div>
+        <div class="col-sm-5">
+        </div>
+    </div>
+</div>-->
+
+<div class="content">
+    <div class="row">
+        <div class="col-sm-4">
+            <h4 class="section-header">Unanswered Prayers</h4>
+            <div id="unanswered-list" class="unanswered-list dashboard-item"></div>
+        </div>
+        <div class="col-sm-4">
+            <h4 class="section-header">Answered This Week.</h4>
+            <div id="answered-this-week" class="answered-this-week dashboard-item"></div>
+        </div>
+        <div class="col-sm-4">
+            <h4 class="section-header">Recently Added</h4>
+            <div id="recently-added" class="recently-added dashboard-item"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    $(function () {
+        UnansweredPrayers();
+        AnsweredThisWeek();
+        RecentlyAdded();
+        setInterval(function(){ UnansweredPrayers(); }, 5000);
+        setInterval(function(){ AnsweredThisWeek(); }, 5000);
+        setInterval(function(){ RecentlyAdded(); }, 5000);
+    });
+
+    function PopulateUnanswered(results) {
+        var unansweredList = $('#unanswered-list');
+        unansweredList.html('');
+
+        var highlight = '';
+
+        var today = Date.now();
+
+        for (var p in results) {
+            var dateAdded = new Date(results[p].date_added);
+            var dateDiff = today - dateAdded;
+
+            var Difference_In_Days = dateDiff / (1000 * 3600 * 24);
+
+            console.log(results[p].title + ': ' + Difference_In_Days);
+
+            switch (true) {
+                case (Difference_In_Days > 60):
+                    highlight = 'highlight-red';
+                    break;
+                case (Difference_In_Days > 30):
+                    highlight = 'highlight-yellow';
+                    break;
+                default:
+                    highlight = 'highlight-blue';
+                    break;
+            }
+
+            var resultItem = $('<div id="' + results[p].prayer_request_id + '" class="result-item '+ highlight +'"></div>');
+            var title = $('<span id="" class="result-item-code">'+ results[p].title +'</span>');
+            var date = $('<span id="" class="result-item-descrip">'+ results[p].date_added +'</span>');
+
+            resultItem.append(title);
+            resultItem.append(date);
+
+            unansweredList.append(resultItem);
+        }
+    }
+
+    function UnansweredPrayers() {
+        var url = "{{ url_for('apiUnansweredPrayerRequest') }}"
+        var data = '';
+
+        $.ajax({
+            type: "GET",
+            url: url,
+            data: data,
+            success: function(data, textStatus, jqXHR)
+            {
+                var jsonData = JSON.parse(jqXHR.responseText);
+                //console.log(jsonData);
+
+                PopulateUnanswered(jsonData);
+            },
+            error: function (jqXHR, textStatus, errorThrown)
+            {
+                consol.log('Aw shit it broke!');
+                consol.log(errorThrown);
+            },
+         });
+    }
+
+    function PopulateAnsweredThisWeek(results) {
+        var thisweek = $('#answered-this-week');
+        thisweek.html('');
+
+        for (var p in results) {
+            var resultItem = $('<div id="' + results[p].prayer_request_id + '" class="result-item highlight-green"></div>');
+            var title = $('<span id="" class="result-item-code">'+ results[p].title +'</span>');
+            var date = $('<span id="" class="result-item-descrip">'+ results[p].date_answered +'</span>');
+
+            resultItem.append(title);
+            resultItem.append(date);
+
+            thisweek.append(resultItem);
+        }
+    }
+
+    function AnsweredThisWeek() {
+        var url = "{{ url_for('answeredThisWeek') }}"
+        var data = '';
+
+        $.ajax({
+            type: "GET",
+            url: url,
+            data: data,
+            success: function(data, textStatus, jqXHR)
+            {
+                var jsonData = JSON.parse(jqXHR.responseText);
+                //console.log(jsonData);
+
+                PopulateAnsweredThisWeek(jsonData);
+            },
+            error: function (jqXHR, textStatus, errorThrown)
+            {
+                consol.log('Aw shit it broke!');
+                consol.log(errorThrown);
+            },
+         });
+    }
+
+    function PopulateRecentlyAdded(results) {
+        var thisweek = $('#recently-added');
+        thisweek.html('');
+
+        for (var p in results) {
+            var resultItem = $('<div id="' + results[p].prayer_request_id + '" class="result-item highlight-blue"></div>');
+            var title = $('<span id="" class="result-item-code">'+ results[p].title +'</span>');
+            var date = $('<span id="" class="result-item-descrip">'+ results[p].date_added +'</span>');
+
+            resultItem.append(title);
+            resultItem.append(date);
+
+            thisweek.append(resultItem);
+        }
+    }
+
+    function RecentlyAdded() {
+        var url = "{{ url_for('apiRecentlyAddedPrayerRequest') }}"
+        var data = '';
+
+        $.ajax({
+            type: "GET",
+            url: url,
+            data: data,
+            success: function(data, textStatus, jqXHR)
+            {
+                var jsonData = JSON.parse(jqXHR.responseText);
+                //console.log(jsonData);
+
+                PopulateRecentlyAdded(jsonData);
+            },
+            error: function (jqXHR, textStatus, errorThrown)
+            {
+                consol.log('Aw shit it broke!');
+                consol.log(errorThrown);
+            },
+         });
+    }
+
+</script>
+
+{% endblock %}

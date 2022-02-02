@@ -1,0 +1,99 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="row">
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="flex-container justify-content-between w-100 my-3">
+                    <div class="header-title">
+                        <div class="flex-container">
+                            <h2>Are you sure you want to delete: {{ p_request.title }}?</h2>
+                        </div>
+                    </div>
+                    <div class="header-buttons my-2">
+                        <a href="#"><button id="btn-delete" class="btn btn-light"><i class="far fa-trash-alt "></i></button></a>
+                        <a href="{{ url_for('editPrayerRequest', id= p_request.prayer_request_id )}}"><button class="btn btn-light"><i class="far fa-window-close "></i></button></a>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="form-item-container">
+                        <h5 for="description">Description</h5>
+                        <textarea class="form-control" id="description" name="description" rows="6" disabled>{{ p_request.description }}</textarea>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-item-container">
+                        <h5 for="added-by">Added By:</h5>
+                        <input id="added-by" name="added-by" class="form-control" type="text" value="{{ p_request.added_by }}" disabled />
+                    </div>
+                    <div class="form-item-container">
+                        <h5 for="date-added">Date created:</h5>
+                        <input id="date-added" name="date-added" class="form-control" type="date" value="{{ p_request.date_added }}" disabled />
+                    </div>
+                    <div class="form-item-container">
+                        <h5 for="category">Category:</h5>
+                        <select id="category" class="form-control dropdown" aria-h5="category" name="category" disabled >
+                            {% if categories %}
+                                {% for category in categories %}
+                                    {% if p_request._category.category_id == category.category_id %}
+                                        <option value="{{ category.category_id }}" selected>{{ category.title }}</option>
+                                    {% else %}
+                                        <option value="{{ category.category_id }}">{{ category.title }}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}
+                        </select>
+                    </div>
+                    <div class="form-item-container">
+                        <h5 for="status">Status:</h5>
+                        <select id="status" class="form-control dropdown" aria-h5="status" name="status" disabled >
+                            {% if p_request.is_answered == 0 %}
+                            <option value="0" selected>Not Answerd</option>
+                            <option value="1">Answered</option>
+                            {% else %}
+                            <option value="0">Not Answerd</option>
+                            <option value="1" selected>Answered</option>
+                            {% endif %}
+                        </select>
+                    </div>
+                    <div class="form-item-container">
+                        <h5 for="date-answered">Date answered:</h5>
+                        <input id="date-answered" name="date-added" class="form-control" type="date" value="{{ p_request.date_answered }}" disabled />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    //KAW going to post form.
+    $('#btn-delete').click(function () {
+        //KAW collecting variables
+        var id ='{{ p_request.prayer_request_id }}';
+        data = {
+            id: id,
+        };
+
+        var url = "{{ url_for('removePrayerRequest') }}"
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: data,
+            success: function(data, textStatus, jqXHR)
+            {
+                window.location.href = "{{ url_for('prayer_request_all_view') }}";
+            },
+            error: function (jqXHR, textStatus, errorThrown)
+            {
+                consol.log('Aw shit it broke!');
+            },
+         });
+    });
+</script>
+
+{% endblock %}
