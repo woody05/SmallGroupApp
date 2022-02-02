@@ -1,2 +1,3 @@
 /mariadb_connection.local.json
 /venv/**
+*/__pycache__/**
