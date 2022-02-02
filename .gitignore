@@ -1,2 +1,2 @@
-mariadb_connection.local.json
-venv
+/mariadb_connection.local.json
+/venv/**
