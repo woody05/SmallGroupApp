@@ -2,9 +2,9 @@
 
 {% block content %}
 
-<div class="row">
+<div class="row g-0">
     <div class="card">
-        <div class="card-body">
+        <div class="card-header">
             <div class="row">
                 <div class="flex-container justify-content-between w-100">
                     <div class="header-title">
@@ -14,6 +14,82 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="options-list">
+                    <div class="option-item">
+                        <h4>Profile Info</h4>
+                    </div>
+                    <div class="option-item">
+                        <h4>All Users</h4>
+                    </div>
+                </div>
+            </div>
+            <!--<div class="row pb-3">
+                <div class="col-sm-4">
+                    <h4 class="section-header">Options</h4>
+                    <div class="input-row">
+                        <input type="checkbox" id="receive-emails" name="receive-emails" value="{{ user.receive_email }}">
+                        <label for="receive-emails">Receive Emails</label><br>
+                    </div>
+                </div>
+                <div class="col-sm-4"></div>
+                <div class="col-sm-4"></div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4">
+                    <h4 class="section-header">Account Info</h4>
+                    <div class="input-row">
+                        <input id="email" class="form-control" name="email" type="email" value="{{ user.email_address }}" placeholder="Enter Email Address." />
+                    </div>
+                    <div class="input-row">
+                        <input id="user-name" class="form-control" name="user-name" type="text" value="{{ user.user_name }}" placeholder="Enter User Name." />
+                    </div>
+                    <div class="input-row">
+                        <input id="password1" class="form-control" name="password1" type="password" placeholder="Enter Password." />
+                    </div>
+                    <div class="input-row">
+                        <input id="password2" class="form-control" name="password2" type="password" placeholder="Re-Enter Password." />
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <h4 class="section-header">Person Info</h4>
+                    <div class="input-row">
+                        <input id="first-name" class="form-control" name="first-name" type="text" value="{{ user.first_name }}" placeholder="Enter First Name." />
+                    </div>
+                    <div class="input-row">
+                        <input id="last-name" class="form-control" name="last-name" type="text" value="{{ user.last_name }}" placeholder="Enter Last Name." />
+                    </div>
+                    <div class="input-row">
+                        <input id="age" class="form-control" name="age" type="number"value="{{ user.age }}" placeholder="Enter Age." />
+                    </div>
+                    <div class="input-row">
+                        <input id="phone_number" class="form-control" name="phone_number" value="{{ user.phone_number }}" type="text" placeholder="Enter Phone Number." />
+                    </div>
+                    <div class="input-row">
+                        <select id="gender" class="form-control" aria-label="gender" value="{{ user.gender }}" name="gender">
+                            <option value="male">male</option>
+                            <option value="female">female</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <h4 class="section-header">Location Info</h4>
+                    <div class="input-row">
+                        <input id="address" class="form-control" name="address" type="text" placeholder="Enter Address." />
+                    </div>
+                    <div class="input-row">
+                        <input id="city" class="form-control" name="city" type="text" placeholder="Enter City." />
+                    </div>
+                    <div class="input-row">
+                        <input id="state" class="form-control" name="state" type="text" placeholder="Enter State." />
+                    </div>
+                    <div class="input-row">
+                        <input id="zip" class="form-control" name="zip" type="text" placeholder="Enter Zip Code." />
+                    </div>
+                </div>
+            </div>-->
         </div>
     </div>
 </div>

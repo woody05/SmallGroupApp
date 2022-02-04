@@ -2,9 +2,9 @@
 
 {% block content %}
 
-<div class="row">
+<div class="row g-0">
     <div class="card">
-        <div class="card-body">
+        <div class="card-header">
             <div class="row">
                 <div class="flex-container justify-content-between w-100">
                     <div class="header-title">
@@ -12,11 +12,21 @@
                             <h2 class="py-2">{{ title }}</h2>
                         </div>
                     </div>
+                    <div class="header-filter flex-container my-3">
+                        <label for="status-filter" class="px-3 pt-1">Status</label>
+                        <select id="status-filter" name="status-filter" class="form-select">
+                            <option>All</option>
+                            <option>Answered</option>
+                            <option>Unanswered</option>
+                        </select>
+                    </div>
                     <div class="header-buttons my-2">
                         <a href="{{ url_for('addPrayerRequest') }}"><button id="btn-new" class="btn btn-light" data-toggle="tooltip" data-placement="top" title="Add new"><i class="far fa-plus-square"></i></button></a>
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="card-body">
             <div class="prayer-container">
                 <table id="prayer-request" class="table table_bordered display nowrap" style="width:100%">
                     <thead class="">
