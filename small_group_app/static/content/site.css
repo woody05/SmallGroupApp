@@ -299,5 +299,5 @@ input[type="checkbox"].input-validation-error {
     box-shadow: 0px 2px 10px #999!important;
 }
 .card-body{
-    padding: 2rem;
+    /*padding: 2rem;*/
 }
