@@ -13,8 +13,10 @@
                         </div>
                     </div>
                     <div class="header-buttons my-2">
-                        <a href="#"><button id="btn-delete" class="btn btn-light"><i class="far fa-trash-alt "></i></button></a>
-                        <a href="{{ url_for('editPrayerRequest', id= p_request.prayer_request_id )}}"><button class="btn btn-light"><i class="far fa-window-close "></i></button></a>
+                        <div class="flex-container">
+                            <a href="#"><i id="btn-delete"  class="far fa-trash-alt action_icon"></i></a>
+                            <a href="{{ url_for('editPrayerRequest', id= p_request.prayer_request_id )}}"><i class="far fa-window-close action_icon"></i></a>
+                        </div>
                     </div>
                 </div>
             </div>
