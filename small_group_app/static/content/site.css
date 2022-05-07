@@ -1,5 +1,6 @@
 body {
-
+    background-image: url('../img/login_bg.jpg');
+    background-size: cover;
 }
 
 .w-15{
@@ -258,6 +259,8 @@ input[type="checkbox"].input-validation-error {
   z-index: 1;
 }
 #top-bar{
+  background-color: #32373d !important;
+  color: rgba(255, 255, 255, 0.6);
 }
     @media (prefers-reduced-motion: reduce) {
         #top-bar .custom-menu {
