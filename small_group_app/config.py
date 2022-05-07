@@ -14,6 +14,8 @@ with open(MARIADB_CREDENTIALS_PATH, 'rb') as fp:
     mariadb_creds = json.load(fp)
 
 class Config:
+
+    SECRET_KEY = "LKJHOIHoih98y98"
     
     # Maria DB settings
     MARIADB_CREDENTIALS_PATH = MARIADB_CREDENTIALS_PATH

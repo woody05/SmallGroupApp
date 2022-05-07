@@ -12,14 +12,11 @@ from flask_login import LoginManager, UserMixin, login_required, login_user, log
 from .config import Config
 
 app = Flask(__name__)
-app.config.from_object(config)
-app.config['SQLALCHEMY_DATABASE_URI'] = Config.SQLALCHEMY_DATABASE_URI
-app.config['SECRET_KEY'] = "LKJHOIHoih98y98"
+app.config.from_object(Config)
 
 # flask-login
 login_manager = LoginManager()
 login_manager.init_app(app)
-#login_manager.login_view = "home"
 
 
 db = SQLAlchemy(app)
