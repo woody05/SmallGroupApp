@@ -18,8 +18,8 @@
         <div class="card-body">
             <div class="director-container">
                 <table id="directory" class="table table_bordered display nowrap" style="width:100%">
-                    <thead class="">
-                        <tr>
+                    <thead class="directory-head">
+                        <tr class="directory-header">
                             <th>Name</th>
                             <th>Phone Number</th>
                             <th>Email</th>
@@ -66,6 +66,13 @@
             }
     
     $(function() {
+        var header = $('#directory-header').clone();
+        console.log(header);
+        header.appendTo('#directory-head');
+        $('#example tfoot th').each(function () {
+            var title = $(this).text();
+            $(this).html('<input type="text" placeholder="Search ' + title + '" />');
+        });
         var prayer_request_table = $('#directory').DataTable(dt_request_config);
     } );
 

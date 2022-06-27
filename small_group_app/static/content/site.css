@@ -26,7 +26,7 @@ body {
 /* styles for validation helpers */
 
 .btn{
-    border-radius: 0;
+    /*border-radius: 0;*/
 }
 .btn-light{
     font-size: 1.3rem;
@@ -68,21 +68,17 @@ input[type="checkbox"].input-validation-error {
 .validation-summary-valid {
     display: none;
 }
-.form-control{
-    border-radius: 0 !important;
-    margin: 0.5rem 0 1rem 0;
-}
 
 .header-input{
     font-size: 2rem;
     padding: 0;
-    
+    background-color: inherit;
 }
-.header-input:focus{
+/*.header-input:focus{
     box-shadow: none;
     border-bottom-style: solid !important;
     border-width: 0 0 1px 0 !important;
-}
+}*/
 
 /*  Sidebar */
 #sidebar {
@@ -199,6 +195,8 @@ input[type="checkbox"].input-validation-error {
   .bg-wrap {
     width: 100%;
     position: relative;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    border-right: 1px solid rgba(255, 255, 255, 0.05);
     z-index: 0; }
     .bg-wrap:after {
       z-index: -1;
@@ -208,11 +206,13 @@ input[type="checkbox"].input-validation-error {
       right: 0;
       bottom: 0;
       content: '';
-      background: #000;
+      background: #32373d;
       opacity: .3; }
     .bg-wrap .user-logo .img {
-      width: 125px;
-      height: 125px;
+      /*width: 125px;
+      height: 125px;*/
+      width: 75px;
+      height:75px;
       border-radius: 50%;
       margin: 0 auto;
       margin-bottom: 10px; }

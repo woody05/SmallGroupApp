@@ -6,10 +6,11 @@ from os import environ
 from small_group_app import app
 
 if __name__ == '__main__':
-    HOST = environ.get('SERVER_HOST', 'localhost')
+    #HOST = environ.get('SERVER_HOST', 'localhost')
     #HOST = '192.168.200.50'
+    HOST = '0.0.0.0'
     try:
-        PORT = int(environ.get('SERVER_PORT', '5555'))
+        PORT = int(environ.get('SERVER_PORT', '5000'))
         #PORT = 5005
     except ValueError:
         PORT = 5555
